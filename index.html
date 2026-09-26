@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная работа 1</title>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #ffffff;
+        }
+
+        header {
+            font-family: "serif";
+            color: #000000;
+            font-size: 18px;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 30px;
+        }
+
+        header > p {
+            margin: 4px 0;
+        }
+
+        main {
+            padding: 5px 20px 20px;
+        }
+
+        main > table > tbody > tr > td {
+            vertical-align: top;
+        }
+
+        canvas {
+            border: 1px solid #000000;
+        }
+
+        input {
+            margin: 1%;
+        }
+
+        input[type="text"] {
+            width: 280px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus {
+            outline: 2px solid #000000;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+            flex: 0 0 18px;
+        }
+
+        label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 18px 8px 0;
+            white-space: nowrap;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button {
+            margin: 20px auto 0;
+            padding: 14px 34px;
+            border: 1px solid #000000;
+            font-size: 18px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        #check-button:hover {
+            background-color: rgb(13 83 5 / 0.3);
+            color: #000000;
+        }
+        #clear-button:hover {
+            background-color: rgb(228 0 0 / 0.3);
+            color: #000000;
+        }
+
+        .result-table {
+            width: 60%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .result-table th,
+        .result-table td {
+            border: 1px solid #000000;
+            padding: 10px;
+            text-align: center;
+        }
+        .result-table th {
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+        }
+        .result-table tbody tr:hover {
+            background-color: #878787;
+        }
+        .result-table tbody td[colspan="6"] {
+            text-align: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .error-message {
+            display: block;
+            color: #c62828;
+            font-size: 14px;
+            margin-left: 1%;
+            margin-top: 4px;
+            min-height: 18px;
+        }
+
+        main > table > tbody > tr > td:last-child {
+            padding-left: 80px;
+        }
+
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Лабораторная работа 1</h1>
+
+    <p>ФИО: Сюрер Тимур Мехметович</p>
+    <p>Группа: Р3216</p>
+    <p>Вариант: 22612</p>
+</header>
+
+<main>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <h2>Проверка точки</h2>
+
+                <form id="point-form">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>X:</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" value="-4">
+                                    -4
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="-3">
+                                    -3
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="-2">
+                                    -2
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="-1">
+                                    -1
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="0">
+                                    0
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="1">
+                                    1
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="2">
+                                    2
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="3">
+                                    3
+                                </label>
+
+                                <label>
+                                    <input type="checkbox" value="4">
+                                    4
+                                </label>
+                                <span id="x-error" class="error-message"></span>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Y:</td>
+                            <td>
+                                <input type="text" id="y-input" placeholder="от -5 до 3">
+                                <span id="y-error" class="error-message"></span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>R:</td>
+                            <td>
+                                <input type="text"  id="r-input" placeholder="от 1 до 4">
+                                <span id="r-error" class="error-message"></span>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <button type="submit" id="check-button">Проверить</button>
+                    <button type="button" id = "clear-button">Очистить таблицу</button>
+                </form>
+            </td>
+
+            <td>
+                <h2>Координатная плоскость</h2>
+
+                <canvas id="area-canvas" width="500" height="500">
+                    Ваш браузер не поддерживает Canvas.
+                </canvas>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Результаты проверки</h2>
+
+    <table class="result-table">
+        <thead>
+        <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>R</th>
+            <th>Результат</th>
+            <th>Время запроса</th>
+            <th>Время выполнения</th>
+        </tr>
+        </thead>
+
+        <tbody id="result-table-body">
+        <tr>
+            <td colspan="6">Пока нет результатов</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
